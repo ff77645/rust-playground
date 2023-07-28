@@ -3,7 +3,7 @@ use std::{
     fs,
     path::Path,
 };
-
+#[allow(unused)]
 fn main()->Result<()>{
 
     // 获取目录的绝对路径
@@ -39,14 +39,30 @@ fn main()->Result<()>{
     dbg!(txt1_str);
 
     let src_dir = "./src";
-    let mut src_dir = fs::read_dir(src_dir).unwrap();
-    // dbg!(src_dir);
+    let src_dir = fs::read_dir(src_dir).unwrap();
+    dbg!(src_dir);
     // dbg!(&src_dir.next().unwrap());
     // dbg!(&src_dir.next().unwrap());
 
     let path = Path::new("./src");
-    let f = |entry:&fs::DirEntry| println!("enrty name: {:?}",entry.file_name());
-    traverse_dir(&path,&f)?;
+    let handler = |entry:&fs::DirEntry| println!("enrty name: {:?}",entry.file_name());
+    traverse_dir(&path,&handler)?;
+
+
+    let link_file = "./copy6.txt";
+    // fs::hard_link(txt1, link_file).unwrap();
+    // let link_path = fs::read_link(link_file)?;
+    // dbg!(link_path);
+
+
+
+    let write_file = "./write_file1.txt";
+    fs::write(write_file,"hello world,Tom!")?;
+    let write_file = "./write_file2.txt";
+    fs::write(write_file,b"hello world,Tom!")?;
+
+
+
     Ok(())
 }
 
